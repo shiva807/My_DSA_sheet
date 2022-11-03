@@ -1,0 +1,36 @@
+Given an array A of positive integers. Your task is to find the leaders in the array. An element of array is leader if it is greater than or equal to all the elements to its right side.
+The rightmost element is always a leader. 
+https://practice.geeksforgeeks.org/problems/leaders-in-an-array-1587115620/1?page=1&difficulty[]=0&curated[]=1&sortBy=submissions
+
+vector<int> leaders(int a[], int n){
+        // Code here - TLE error
+        // int i, max=0;
+        // vector<int> vec;
+        // for(i=0; i<n-1; i++)
+        // {
+        //     max= *max_element(a+i, a+n);
+        //     if(a[i]<max)
+        //         continue;
+        //     else
+        //         vec.push_back(a[i]);
+        // }
+        
+        // vec.push_back(a[i]);
+        // return vec;
+        
+        int i, max = a[n-1];
+        vector<int> vec;
+        vec.push_back(max);
+        
+        for(i=n-2; i>=0; i--)
+        {
+            if(a[i]>=max)
+            {
+                max=a[i];
+                vec.push_back(max);
+            }
+        }
+        reverse(vec.begin(), vec.end());
+        return vec;
+        
+    }
