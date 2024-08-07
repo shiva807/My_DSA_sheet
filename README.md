@@ -1,1 +1,1 @@
-![Untitled design](https://github.com/user-attachments/assets/68ba633d-d25f-4cba-9075-51f2cee0ca2a)
+![Markov generator](https://github.com/user-attachments/assets/5abb3c47-3959-45bd-9efb-23abc67c90b6)
