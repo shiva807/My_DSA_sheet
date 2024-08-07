@@ -1,1 +1,1 @@
-[Untitled design.pptx](https://github.com/user-attachments/files/16532685/Untitled.design.pptx)
+![Untitled design](https://github.com/user-attachments/assets/68ba633d-d25f-4cba-9075-51f2cee0ca2a)
