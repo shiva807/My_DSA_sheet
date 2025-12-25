@@ -1,0 +1,44 @@
+'''
+class Node:
+    def __init__(self, val):
+        self.data = val
+        self.right = None
+        self.left = None
+'''
+import queue
+
+class Solution:
+    
+    
+    def bottomView(self, root):
+        # code here
+        ans = []
+        
+        if not root:
+            return ans
+            
+        q = queue.Queue()
+        line_node = {}
+        q.put((root, 0))
+        
+        while(not q.empty()):
+            q_data = q.get()
+            node = q_data[0]
+            line = q_data[1]
+            line_node[line] = node.data
+            
+            if node.left:
+                q.put((node.left, line-1))
+            
+            if node.right:
+                q.put((node.right, line+1))
+                
+        sorted_line_node = dict(sorted(line_node.items()))
+        # print(sort_dict)
+                
+        for value in sorted_line_node.values():
+            ans.append(value)
+            
+        return ans
+
+# Passed all cases in GFG 
