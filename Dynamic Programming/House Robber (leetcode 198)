@@ -1,0 +1,87 @@
+class Solution:
+
+    # Memoisation solution
+    def helper(self, nums, dp, indx):
+
+        if(indx == 0):
+            return nums[indx]
+        if(indx < 0):
+            return 0
+        if(dp[indx] != -1):
+            return dp[indx]
+        
+        pick = nums[indx] + self.helper(nums, dp, indx - 2)
+        no_pick = 0 + self.helper(nums, dp, indx - 1)
+
+        dp[indx] = max(pick, no_pick)
+        return dp[indx]
+
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [-1] * n
+
+        return self.helper(nums, dp, n-1)
+
+
+
+class Solution:
+
+    # Tabulation solution
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [-1] * n
+
+        dp[0] = nums[0]
+        if(n > 1):
+            dp[1] = max(nums[1], dp[0])
+            
+            for i in range(2, n):
+                pick = nums[i] + dp[i-2]
+                no_pick = 0 + dp[i-1]
+                dp[i] = max(pick, no_pick)
+
+        return dp[n-1]
+
+
+   # OR (above has better TC, below has cleaner understanding)
+
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [-1] * n
+
+        dp[0] = nums[0]
+        for i in range(1, n):
+
+            pick = nums[i]
+            if(i > 1):
+                pick += dp[i-2]
+            no_pick = 0 + dp[i-1]
+            dp[i] = max(pick, no_pick)
+
+        return dp[n-1]
+
+
+
+
+class Solution:
+
+    # Tabulation solution -- space optimised
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        prev = nums[0]
+        prev2 = 0
+
+        for i in range(1, n):
+            pick = nums[i]
+            if(i > 1):
+                pick += prev2
+            no_pick = 0 + prev
+            curr = max(pick, no_pick)
+            
+            prev2 = prev
+            prev = curr
+
+        return prev
+
+
+        
