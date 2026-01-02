@@ -1,0 +1,40 @@
+'''
+Problem link: https://takeuforward.org/plus/dsa/problems/frog-jump 
+A frog wants to climb a staircase with n steps. Given an integer array heights, where heights[i] contains the height of the ith step.
+To jump from the ith step to the jth step, the frog requires abs(heights[i] - heights[j]) energy, where abs() denotes the absolute difference. The frog can jump from any step either one or two steps, provided it exists.
+
+Return the minimum amount of energy required by the frog to go from the 0th step to the (n-1)th step.
+
+Example 1
+Input: heights = [2, 1, 3, 5, 4]
+Output: 2
+Explanation:
+One possible route can be,
+0th step -> 2nd Step = abs(2 - 3) = 1
+2nd step -> 4th step = abs(3 - 4) = 1
+Total = 1 + 1 = 2.
+'''
+
+# dp[indx] stores the min energy required to reach indx from 0
+class Solution:
+
+    def helper(self, dp, heights, indx):
+        if(indx == 0):
+            return 0
+        
+        if(dp[indx]!= -1):   # don't compute dp value if its alrdy present
+            return dp[indx]
+        
+        left = self.helper(dp, heights, indx-1) + abs(heights[indx] - heights[indx-1])
+        if(indx > 1):
+            right = self.helper(dp, heights, indx-2) + abs(heights[indx] - heights[indx-2])
+        else:
+            right = 10**9
+        
+        dp[indx] = min(left, right)
+        return dp[indx]
+
+    def frogJump(self, heights):
+        dp = [-1]*(len(heights)+1)
+        
+        return self.helper(dp, heights, len(heights)-1)
