@@ -16,6 +16,8 @@ Total = 1 + 1 = 2.
 '''
 
 # dp[indx] stores the min energy required to reach indx from 0
+# dp[0] will be 0 becs when I am already at the 0th indx I don't have to go anywhere, so min energy required will be 0
+#----- MEMOISATION -----
 class Solution:
 
     def helper(self, dp, heights, indx):
@@ -38,3 +40,45 @@ class Solution:
         dp = [-1]*(len(heights)+1)
         
         return self.helper(dp, heights, len(heights)-1)
+
+
+#------ TABULATION -------
+
+class Solution:
+
+    def frogJump(self, heights):    
+            n = len(heights)
+            dp = [-1] * n
+            dp[0] = 0
+            for i in range(1, n):
+                fs = dp[i-1] + abs(heights[i] - heights[i-1])
+                if(i > 1):
+                    ss = dp[i-2] + abs(heights[i] - heights[i-2])
+                else:
+                    ss = 10**9
+                
+                dp[i] = min(fs, ss)
+            
+            return dp[n-1]
+
+
+#------- SPACE OPTIMISED TABULATION ------
+
+class Solution:
+
+    def frogJump(self, heights):
+        n = len(heights)
+        prev = 0
+        prev2= 0
+        for i in range(1, n):
+            fs = prev + abs(heights[i] - heights[i-1])
+            if(i > 1):
+                ss = prev2 + abs(heights[i] - heights[i-2])
+            else:
+                ss = 10**9
+            
+            curr = min(fs, ss)
+            prev2 = prev
+            prev = curr
+        
+        return prev
