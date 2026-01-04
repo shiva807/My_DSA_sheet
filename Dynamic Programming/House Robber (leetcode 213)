@@ -1,0 +1,35 @@
+class Solution:
+
+    def helper(self, nums, dp, indx):
+
+        if(indx == 0):
+            return nums[indx]
+
+        if(indx < 0):
+            return 0
+
+        if(dp[indx] != -1):
+            return dp[indx]
+
+        pick = nums[indx] + self.helper(nums, dp, indx-2)
+        no_pick = 0 + self.helper(nums, dp, indx-1)
+
+        dp[indx] = max(pick, no_pick)
+
+        return dp[indx]
+
+
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 1:
+            return nums[0]
+
+        first = nums[0:n-1]
+        second = nums[1:n]
+
+        dp1 = [-1] * len(first)
+        dp2 = [-1] * len(second)
+
+        m1 = self.helper(first, dp1, len(first)-1)
+        m2 = self.helper(second, dp2, len(second)-1)
+        return max(m1, m2)
