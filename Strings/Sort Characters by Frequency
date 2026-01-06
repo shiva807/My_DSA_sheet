@@ -1,0 +1,19 @@
+from collections import Counter
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        # freq = {}
+        # for alpha in s:
+        #     if alpha in freq:
+        #         freq[alpha] += 1
+        #     else:
+        #         freq[alpha] = 1
+
+        freq = Counter(s)
+
+        freq = dict(sorted(freq.items(), key=lambda item: item[1], reverse=True))
+
+        ans = ""
+        for key,value in freq.items():
+            ans += key*value
+        
+        return ans
