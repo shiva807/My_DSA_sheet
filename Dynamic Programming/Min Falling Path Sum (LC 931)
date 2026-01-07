@@ -1,0 +1,34 @@
+class Solution:
+
+    def helper(self, matrix, dp, i, j):
+        if(j < 0 or j > len(matrix)-1):
+            return float('inf')
+
+        if(i == len(matrix)-1):
+            return matrix[i][j]
+        
+        if(dp[i][j] != None):
+            return dp[i][j]
+
+        down = matrix[i][j] + self.helper(matrix, dp, i+1, j)
+        left_diagonal = matrix[i][j] + self.helper(matrix, dp, i+1, j-1)
+        right_diagonal = matrix[i][j] + self.helper(matrix, dp, i+1, j+1)
+        dp[i][j] = min(down, min(left_diagonal, right_diagonal))
+        
+        return dp[i][j]
+
+    def minFallingPathSum(self, matrix: List[List[int]]) -> int:
+        n = len(matrix)
+        dp = [[None for _ in range(n)] for _ in range(n)]
+        ans = 1e6
+        for j in range(0, n):
+            ans = min(ans, self.helper(matrix, dp, 0, j))
+
+        return ans
+
+"""
+Mistakes I made before in Memoisation:
+- if its minimum sum then boundary checks should return infinity or 1e9 not 0
+- order should be boundary check -> base case -> dp lookup
+- variable start points means we have to call recursion for all in a loop (missed that)
+"""
