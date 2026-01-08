@@ -1,0 +1,30 @@
+# MEMOISATION 
+
+class Solution:
+
+    def helper(self, nums, dp, indx, target):
+        if(target == 0):
+            return True
+        if(indx == 0):
+            return (nums[0] == target)
+        if(dp[indx][target] != None):
+            return dp[indx][target]
+        
+        no_pick = self.helper(nums, dp, indx-1, target)
+        pick = False
+        if(nums[indx] <= target):
+            pick = self.helper(nums, dp, indx-1, target-nums[indx])
+        dp[indx][target] = pick or no_pick
+
+        return dp[indx][target]
+
+
+    def canPartition(self, nums: List[int]) -> bool:
+        n = len(nums)
+        if(sum(nums)%2 != 0): #if its odd, sum/2 not possible
+            return False
+        target = int(sum(nums)/2)
+        dp = [[None for _ in range(target+1)] for _ in range(n)]
+
+        return self.helper(nums, dp, n-1, target)
+        
