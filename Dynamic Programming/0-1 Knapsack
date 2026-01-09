@@ -1,0 +1,56 @@
+# Tabulation
+
+class Solution:
+    def knapsack01(self, wt, val, n, W):
+
+        dp = [[-1 for _ in range(W+1)] for _ in range(n)]
+
+        # Base case1: if only 1 item available, then we will only take the item if its wt < bagwt at that instant(j)
+        for j in range(0, W+1):
+            if(wt[0] <= j):
+                dp[0][j] = val[0]
+            else:
+                dp[0][j] = 0
+
+        # Base case2: if 0 capacity, no items can be taken
+        for i in range(n):
+            dp[i][0] = 0
+
+        for i in range(1, n):
+            for j in range(1, W+1):
+                no_pick = dp[i-1][j]
+                pick = float('-inf')
+                if(wt[i] <= j):
+                    pick = val[i] + dp[i-1][j-wt[i]]
+
+                dp[i][j] = max(pick, no_pick)
+
+        return dp[n-1][W]
+
+# MEMOISATION
+
+class Solution:
+
+    def helper(self, wt, val, W, dp, indx):
+        if(indx == 0):
+            if(wt[0] <= W):
+                return val[0]
+            return 0
+        
+        if(dp[indx][W] != -1):
+            return dp[indx][W]
+        
+        no_pick = self.helper(wt, val, W, dp, indx-1)
+        pick = float('-inf')
+        if(wt[indx] <= W):
+            pick = val[indx] + self.helper(wt, val, W-wt[indx], dp, indx-1)
+
+        dp[indx][W] = max(pick, no_pick)
+
+        return dp[indx][W]
+
+    def knapsack01(self, wt, val, n, W):
+
+        dp = [[-1 for _ in range(W+1)] for _ in range(n)]
+
+        return self.helper(wt, val, W, dp, n-1)
