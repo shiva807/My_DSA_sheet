@@ -1,0 +1,39 @@
+class Solution:
+
+    def helper(self, indx, target, dp, arr):
+        if(target == 0): return 1
+        if(indx == 0):
+            if(target == 0 and arr[0] == 0): return 2
+            if(target == 0 or target == arr[0]): return 1
+            return 0
+
+        if(dp[indx][target] != None): return dp[indx][target]
+
+        no_pick = self.helper(indx-1, target, dp, arr)
+        pick = 0
+        if(arr[indx] <= target):
+            pick = self.helper(indx-1, target-arr[indx], dp, arr)
+        
+        dp[indx][target] = pick + no_pick
+
+        return dp[indx][target]
+
+    def countPartitions(self, n, diff, arr):
+        k = sum(arr)
+        target = int((k-diff)/2)
+        dp = [[None for _ in range(target+1)] for _ in range(n)]
+
+        return self.helper(n-1, target, dp, arr)
+
+"""
+The base case is optimised for cases like [0, 0, 1] where array has 0 as an element.
+Little bit maths is needed for this.
+s1-s2 = diff  , totalsum = s1+s2
+s1 = totalsum-s2
+totalsum-s2 - s2 = diff
+totalsum - 2s2= diff
+s2 = (totalsum - diff)/2
+
+Hence, this is the target. But, its only applicable for positive integers array.
+"""
+
