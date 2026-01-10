@@ -1,0 +1,45 @@
+class Solution:
+    def helper(self, indx, curr, target, nums, dp, offset):
+        # if(curr == target):
+        #     return 1
+        # if(indx == -1):
+        #     if(curr == target):
+        #         return 1
+        #     return 0
+
+        # if(dp[indx][curr] != -1):
+        #     return dp[indx][curr]
+
+        # minus = self.helper(indx-1, curr-nums[indx], target, dp, nums)
+        # plus = self.helper(indx-1, curr+nums[indx], target, dp, nums)
+
+        # dp[indx][curr] = minus + plus
+
+        # return dp[indx][curr]
+        if indx < 0:
+            return 1 if curr == target else 0
+
+        if dp[indx][curr + offset] != -1:
+            return dp[indx][curr + offset]
+
+        plus = self.helper(indx-1, curr + nums[indx], target, nums, dp, offset)
+        minus = self.helper(indx-1, curr - nums[indx], target, nums, dp, offset)
+
+        dp[indx][curr + offset] = plus + minus
+        return dp[indx][curr + offset]
+
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        # n = len(nums)
+        # dp = [[-1 * (target+1)] for _ in range(n)]
+
+        # return self.helper(n-1, 0, target, dp, nums)
+        total = sum(nums)
+        n = len(nums)
+
+        dp = [[-1] * (2*total + 1) for _ in range(n)]
+        return self.helper(n-1, 0, target, nums, dp, total)
+
+
+# The commented part is what i did by myself, the uncommented part is from chatgpt. Mistake I made, not consider -ve values of curr for the dp array
+# We need offset to make the curr values positive
+# Striver suggested different way to solve this...Count patitions with given difference is the exact copy of this.
