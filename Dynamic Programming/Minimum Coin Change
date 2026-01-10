@@ -1,0 +1,83 @@
+# MEMOISATION
+
+class Solution:
+
+    def helper(self, indx, amt, dp, coins):
+        if(indx == 0):
+            if(amt % coins[indx] == 0):
+                return amt // coins[indx]
+            return float('inf')
+        
+        if(dp[indx][amt] != None):
+            return dp[indx][amt]
+        
+        no_pick = self.helper(indx-1, amt, dp, coins)
+        pick = float('inf')
+        if(coins[indx] <= amt):
+            pick = 1 + self.helper(indx, amt - coins[indx], dp, coins)
+        
+        dp[indx][amt] = min(pick, no_pick)
+        return dp[indx][amt]
+
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        n = len(coins)
+        dp = [[None for _ in range(amount+1)] for _ in range(n)]
+
+        res = self.helper(n-1, amount, dp, coins)
+
+        return -1 if res == float('inf') else res
+
+
+# TABULATION
+
+def coinChange(self, coins: List[int], amount: int) -> int:
+        n = len(coins)
+        dp = [[None for _ in range(amount+1)] for _ in range(n)]
+
+        for amt in range(0, amount+1):
+            if(amt % coins[0] == 0):
+                dp[0][amt] = amt // coins[0]
+            else:
+                dp[0][amt] = float('inf')
+
+        for i in range(1, n):
+            for amt in range(0, amount+1):
+                no_pick = dp[i-1][amt]
+                pick = float('inf')
+                if(coins[i] <= amt):
+                    pick = 1 + dp[i][amt - coins[i]]
+
+                dp[i][amt] = min(pick, no_pick)
+
+        res = dp[n-1][amount]
+
+        return -1 if res == float('inf') else res
+
+
+# SPACE OPTIMISATION (did myself, missed one line prev = curr) 
+
+def coinChange(self, coins: List[int], amount: int) -> int:
+        n = len(coins)
+        prev = [None for _ in range(amount+1)]
+        curr = [None for _ in range(amount+1)]
+
+        for amt in range(0, amount+1):
+            if(amt % coins[0] == 0):
+                prev[amt] = amt // coins[0]
+            else:
+                prev[amt] = float('inf')
+
+        for i in range(1, n):
+            for amt in range(0, amount+1):
+                no_pick = prev[amt]
+                pick = float('inf')
+                if(coins[i] <= amt):
+                    pick = 1 + curr[amt - coins[i]]
+
+                curr[amt] = min(pick, no_pick)
+
+            prev = curr
+
+        res = prev[amount]
+
+        return -1 if res == float('inf') else res
