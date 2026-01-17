@@ -1,0 +1,55 @@
+class Solution:
+
+    def helper(self, nums, goal):
+        l = 0
+        r = 0
+        curr_sum = 0
+        count = 0
+
+        if(goal < 0):
+            return 0
+
+        for r in range(len(nums)):
+
+            curr_sum += nums[r]
+
+            while(curr_sum > goal):
+                curr_sum -= nums[l]
+                l += 1
+            
+            if(curr_sum <= goal):
+                count+= (r-l+1)
+
+        return count
+
+    def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:
+
+        # Prefix sum and Hashmap approach
+
+        # mp = {0: 1}
+        # prefix_sum = 0
+        # count = 0
+
+        # for i in range(len(nums)):
+            
+        #     prefix_sum += nums[i]
+
+        #     remaining = prefix_sum - goal
+        #     if(remaining in mp):
+        #         count += mp[remaining]
+
+        #     if(prefix_sum not in mp):
+        #         mp[prefix_sum] = 1
+        #     else:
+        #         mp[prefix_sum] += 1
+
+        # return count
+
+        # Sliding Window approach
+
+        return self.helper(nums, goal) - self.helper(nums, goal-1)
+
+
+"""
+2 solutions are there. The sliding window soln here is only specific for non-negative arrays, for negative array this soln wont work.
+"""
