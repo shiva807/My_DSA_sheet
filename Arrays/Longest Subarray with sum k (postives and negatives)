@@ -1,0 +1,29 @@
+class Solution:
+    def longestSubarray(self, arr, k):  
+        # code here
+        
+        # hashmap of prefix_sum: index found
+        mp = {}
+        
+        max_len = 0
+        prefix_sum = 0
+        
+        for i in range(len(arr)):
+            
+            prefix_sum += arr[i]
+                
+            if(prefix_sum == k):
+                max_len = max(max_len, i+1)
+                
+            remaining =  prefix_sum - k
+                
+            if(remaining in mp.keys()):
+                max_len = max(max_len, i - mp[remaining])
+            
+            # this check is there becs we want the leftmost occurence of the prefix_sum
+            # so we dont update the index even if it found again at the right
+            # because we want longest subarray
+            if(prefix_sum not in mp.keys()):
+                mp[prefix_sum] = i
+                
+        return max_len
