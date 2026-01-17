@@ -1,0 +1,22 @@
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+
+        mp = {0: 1}
+        prefix_sum = 0
+        count = 0
+
+        for i in range(len(nums)):
+
+            prefix_sum += nums[i]
+
+            remaining = prefix_sum - k
+
+            if(remaining in mp):
+                count += mp[remaining]
+
+            if(prefix_sum not in mp):
+                mp[prefix_sum] = 1
+            else:
+                mp[prefix_sum] += 1
+
+        return count
