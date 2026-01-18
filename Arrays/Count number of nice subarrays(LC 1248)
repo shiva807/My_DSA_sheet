@@ -1,0 +1,31 @@
+class Solution:
+
+    def helper(self, nums, k):
+        if(k<0):
+            return 0
+
+        nice = 0
+        count_odd_nos = 0
+        l = 0
+        r = 0
+        
+        for r in range(len(nums)):
+            if(nums[r] % 2):
+                count_odd_nos += 1
+
+            while(count_odd_nos > k):
+                if(nums[l] % 2):
+                    count_odd_nos -= 1
+                l += 1
+            
+            if(count_odd_nos <= k):
+                nice += (r-l+1)
+        
+        return nice
+
+    def numberOfSubarrays(self, nums: List[int], k: int) -> int:
+
+        return self.helper(nums, k) - self.helper(nums, k-1)
+
+# https://chatgpt.com/s/t_696c9312483881919656f41ddf97f56f 
+# r - l + 1 counts how many valid subarrays end at index r, not the length of the answer. 
