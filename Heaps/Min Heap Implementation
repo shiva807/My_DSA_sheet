@@ -1,0 +1,79 @@
+# https://www.geeksforgeeks.org/problems/min-heap-implementation/1 
+
+class minHeap:
+    
+    def __init__(self):
+        # Initialize your data members
+        self.heap = []
+    
+    # 1. index is the last index of the array 
+    # 2. inserted element at last index is compared with its parent
+    # 3. if element inserted is lesser than its parent then we swap
+    # 4. this keeps going upwards till root is reached
+    def _sift_up(self, index: int):
+        while(index > 0):
+            parent = (index-1)//2
+            if(self.heap[index] < self.heap[parent]):
+                self._swap(index, parent)
+            else:
+                break
+            index = parent
+    
+    # 1. index passed is root or first element of array
+    # 2. element at root index is compared with its left and right nodes if they exist
+    # 3. whichever is smallest between left and right, is swapped with root element
+    # 4. if smallest == root index means none of its left or right child are smaller, hence loop breaks
+    def _sift_down(self, index):
+        n = len(self.heap)
+        while True:
+            smallest = index
+            left = 2 * index + 1
+            right = 2 * index + 2
+
+            if left < n and self.heap[left] < self.heap[smallest]:
+                smallest = left
+            if right < n and self.heap[right] < self.heap[smallest]:
+                smallest = right
+
+            if smallest == index:
+                break
+
+            self._swap(index, smallest)
+            index = smallest
+        
+    
+    def _swap(self, x, y):
+        self.heap[x], self.heap[y] = self.heap[y], self.heap[x]
+    
+    # Insert x into the heap
+    def push(self, x: int):
+        # code here
+        self.heap.append(x)
+        self._sift_up(len(self.heap)-1)
+
+
+    # Remove the top (minimum) element
+    def pop(self):
+        # code here
+        if(not self.heap):
+            return -1
+        
+        self._swap(0, len(self.heap)-1)
+        val = self.heap.pop()
+        self._sift_down(0)
+        return val
+
+
+    # Return the top element or -1 if empty
+    def peek(self) -> int:
+        # code here
+        if(not self.heap):
+            return -1
+        
+        return self.heap[0]
+
+
+    # Return the number of elements in the heap
+    def size(self) -> int:
+        # code here
+        return len(self.heap)
