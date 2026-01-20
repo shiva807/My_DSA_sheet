@@ -1,0 +1,42 @@
+# https://leetcode.com/problems/valid-anagram/description/?envType=study-plan-v2&envId=top-interview-150
+
+# Optimised soln
+from collections import Counter
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if(len(s) != len(t)):
+            return False
+        
+        freq = Counter(s)
+
+        for char in t:
+            if(freq[char] == 0):
+                return False
+            freq[char] -= 1
+        
+        return True
+
+
+
+"""
+Date: 20th Jan 2026
+My mistakes
+- below soln was my first soln, everything is good, it got accepted as well, only that early exits were needed and 2 loops not needed
+
+from collections import Counter
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+
+        freq = Counter(s)
+
+        for char in t:
+            freq[char] -= 1
+        
+        for char, count in freq.items():
+            if(count != 0):
+                return False
+        
+        return True
+"""
