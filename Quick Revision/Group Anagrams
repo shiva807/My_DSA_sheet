@@ -1,0 +1,27 @@
+from collections import defaultdict
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+
+        mp = defaultdict(list)
+
+        for s in strs:
+            freq = [0] * 26
+
+            for c in s:
+                freq[ord(c) - ord('a')] += 1
+            
+            mp[tuple(freq)].append(s)
+        
+        return list(mp.values())
+
+"""
+Date: 20th Jan 2026
+Mistakes:
+- Started thiinking on how to group list of lists
+- Could not think of frequency aspect of characters
+TC: O(N * k)
+SC: O(N * k)
+
+For simple approach  soln: https://chatgpt.com/s/t_696f04574ee08191abbd898c7978dc5b
+"""
