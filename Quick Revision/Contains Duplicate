@@ -1,0 +1,26 @@
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        
+        seen = set()
+        for num in nums:
+            if(num in seen):
+                return True
+            seen.add(num)
+        return False
+
+"""
+Date: 20th Jan 2026
+Mistakes I made:  https://chatgpt.com/s/t_696efbedbf1c81919903e96a6d846d12
+- freq count of all elements not needed
+
+Old soln:
+from collections import Counter
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        
+        freq = Counter(nums)
+        for x in freq.keys():
+            if(freq[x] > 1):
+                return True
+        return False
+"""
