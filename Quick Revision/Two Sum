@@ -1,0 +1,21 @@
+# https://leetcode.com/problems/two-sum/description/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+
+        mp = {}
+
+        for i in range(len(nums)):
+            remain = target - nums[i]
+            if(remain in mp.keys()):
+                return [mp[remain], i]
+            mp[nums[i]] = i
+        
+        return []
+
+"""
+Date: 20th Jan 2026
+Mistakes I made:
+- Using hashmap didn't strike by myself
+- Didn't assess the constraints that negatives are also allowed
+"""
