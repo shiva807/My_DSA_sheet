@@ -1,0 +1,43 @@
+# https://leetcode.com/problems/valid-sudoku/?envType=study-plan-v2&envId=top-interview-150
+
+from collections import defaultdict
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+
+        cols = set()
+        n = len(board)
+
+        for i in range(0, n):
+            rows = set()
+            for j in range(0, n):
+                if(board[i][j] == '.'):
+                    continue
+                if(board[i][j] in rows):
+                    return False
+                rows.add(board[i][j])
+        
+        for i in range(0, n):
+            cols = set()
+            for j in range(0, n):
+                if(board[j][i] == '.'):
+                    continue
+                if(board[j][i] in cols):
+                    return False
+                cols.add(board[j][i])
+
+        grid = defaultdict(set)
+
+        for i in range(0, n):
+            for j in range(0, n):
+                if(board[i][j] == '.'):
+                    continue
+                if(board[i][j] in grid[(i//3, j//3)]):
+                    return False
+                grid[(i//3, j//3)].add(board[i][j])
+        
+        return True
+
+"""
+Date: 21st Jan 2026
+Shorter code: https://www.youtube.com/watch?v=TjFXEUCMqI8
+"""
