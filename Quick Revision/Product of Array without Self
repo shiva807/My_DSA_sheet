@@ -1,0 +1,26 @@
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+
+        n = len(nums)
+        arr1 = [1] * n
+        arr2 = [1] * n
+        ans = []
+
+        arr1[0] = 1
+        arr2[n-1] = 1
+        for i in range(1, len(nums)):
+            arr1[i] = arr1[i-1] * nums[i-1] 
+        
+        for i in range(n-2, -1, -1):
+            arr2[i] = arr2[i+1] * nums[i+1]
+        
+        for i in range(0, len(nums)):
+            ans.append(arr1[i]*arr2[i])
+        
+        return ans
+
+"""
+Date: 21st Jan 2026
+Did by myself
+Space can be optimised, check here: https://chatgpt.com/s/t_697105475c9c819194cef5c91890d412
+"""
