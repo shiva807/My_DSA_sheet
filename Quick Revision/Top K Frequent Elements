@@ -1,0 +1,52 @@
+# https://leetcode.com/problems/top-k-frequent-elements/
+
+from collections import Counter
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+
+        freq = Counter(nums)
+        buckets = [[] for _ in range(len(nums)+1)]
+
+        for key,val in freq.items():
+            buckets[val].append(key)
+        
+        ans = []
+        for i in range(len(nums), -1, -1):
+            if(k <= 0):
+                return ans
+            if(not buckets[i]):
+                continue
+            ans.extend(buckets[i])
+            k -= len(buckets[i])
+        
+        return ans
+
+"""
+Date: 21st Jan 2026
+Mistakes:
+- Was correct about the heap and hashmap soln but didn't take the key and value for hashmap properly, the count should be the key not the element
+- Heap soln TC: O(N log k)
+Learnings:
+- Bucket sort is a new algo, more optimal for this.
+- TC: O(N), SC: O(N)
+- Great video: https://www.youtube.com/watch?v=YPTqKIgVk-k
+
+Heap Soln:
+
+from collections import Counter
+import heapq
+from typing import List
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        freq = Counter(nums)
+        heap = []
+
+        for num, count in freq.items():
+            heapq.heappush(heap, (count, num))
+            if len(heap) > k:
+                heapq.heappop(heap)
+
+        return [num for count, num in heap]
+"""
