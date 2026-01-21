@@ -1,0 +1,26 @@
+# https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+
+        i = 0
+        n = len(numbers)
+        j = n-1
+
+        while(i< j):
+            curr_sum = numbers[i] + numbers[j]
+            if(curr_sum > target):
+                j = j-1
+            elif(curr_sum < target):
+                i = i+1
+            else:
+                break
+        
+        return [i+1, j+1]
+
+"""
+Date: 21st Jan 2026
+Mistake:
+- didn't strike to use 2 pointers
+- was thinking in terms of hashmap and target-ele only, which was not the right intuition
+"""
