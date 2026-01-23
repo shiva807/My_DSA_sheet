@@ -1,0 +1,45 @@
+# https://leetcode.com/problems/valid-palindrome/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        i, j = 0, len(s) - 1
+
+        while i < j:
+            while i < j and not s[i].isalnum():
+                i += 1
+            while i < j and not s[j].isalnum():
+                j -= 1
+
+            if s[i].lower() != s[j].lower():
+                return False
+
+            i += 1
+            j -= 1
+
+        return True
+
+
+"""
+Date: 23rd Jan 2026
+Mistakes:
+- logic was totally right, just needed to check the syntax
+- My soln had space O(n) which is not needed (as shown in above)
+My soln:
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        i, j = 0, len(s) - 1
+
+        while i < j:
+            while i < j and not s[i].isalnum():
+                i += 1
+            while i < j and not s[j].isalnum():
+                j -= 1
+
+            if s[i].lower() != s[j].lower():
+                return False
+
+            i += 1
+            j -= 1
+
+        return True
+"""
