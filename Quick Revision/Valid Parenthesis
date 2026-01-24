@@ -1,0 +1,31 @@
+# https://leetcode.com/problems/valid-parentheses/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+
+        stack = []
+        for c in s:
+            if(c == '(' or c == '{' or c == '['):
+                stack.append(c)
+            elif(c == ')'):
+                if(not stack or stack.pop() != '('):
+                    return False
+            elif(c == '}'):
+                if(not stack or stack.pop() != '{'):
+                    return False
+            elif(c == ']'):
+                if(not stack or stack.pop() != '['):
+                    return False
+
+        if stack:
+            return False
+
+        return True
+
+
+"""
+Date: 24th Jan 2026
+- Did almost myself
+- Missed one edge case: s= "]"
+- Took chatgpt help to correct it
+"""
