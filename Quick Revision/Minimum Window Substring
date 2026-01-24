@@ -1,0 +1,38 @@
+# https://leetcode.com/problems/minimum-window-substring/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if len(t) > len(s):
+            return ""
+
+        freq = Counter(t)
+        count = 0
+
+        l = 0
+        min_len = float('inf')
+        start = 0
+
+        for r in range(len(s)):
+            if s[r] in freq:
+                if freq[s[r]] > 0:
+                    count += 1
+                freq[s[r]] -= 1
+
+            while count == len(t):
+                if r - l + 1 < min_len:
+                    min_len = r - l + 1
+                    start = l
+
+                if s[l] in freq:
+                    freq[s[l]] += 1
+                    if freq[s[l]] > 0:
+                        count -= 1
+                l += 1
+
+        return "" if min_len == float('inf') else s[start:start + min_len]
+
+"""
+Date: 24th Jan 2026
+- LC hard -- couldn't solve myself
+- Striver video is good, above soln is from chatgpt which is same as what striver explained.
+"""
