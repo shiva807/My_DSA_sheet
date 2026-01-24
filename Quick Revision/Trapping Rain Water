@@ -1,0 +1,35 @@
+# https://leetcode.com/problems/trapping-rain-water/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+
+        if(not height):
+            return 0
+
+        n = len(height)
+        l = 0
+        r = n-1
+        max_l = height[0]
+        max_r = height[n-1]
+        water = 0
+
+        while(l < r):
+            if(height[l] < height[r]):
+                l += 1
+                max_l = max(max_l, height[l])
+                water += max_l - height[l]
+            else:
+                r -= 1
+                max_r = max(max_r, height[r])
+                water += max_r - height[r]
+            
+        return water
+
+"""
+Date: 23rd Jan 2026
+Mistake:
+- Figured 2 pointer is needed, figured min of left and right is needed, but did not understand how to calculate water for every index
+- For above soln, TC: O(n), SC: O(1)
+- There is SC: O(n) soln also explained in the video, use that if cant come up with most optimal
+- Video: https://www.youtube.com/watch?v=ZI2z5pq0TqA
+"""
