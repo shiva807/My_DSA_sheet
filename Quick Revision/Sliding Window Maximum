@@ -1,0 +1,50 @@
+from collections import deque
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+
+        dq = deque()
+        ans = []
+
+        for r in range(0, len(nums)):
+
+            # remove indices outside the window
+            if(dq and dq[0] <= r-k):
+                dq.popleft()
+
+            # Remove smaller elements (maintain decreasing order)
+            while(dq and nums[dq[-1]] <= nums[r]):
+                dq.pop()
+            dq.append(r)
+
+            # Start adding results once first window is formed
+            if(r+1 >= k):
+                ans.append(nums[dq[0]])
+
+        return ans
+
+
+"""
+Date: 24th Jan 2026
+Mistakes:
+- Could only do the TLE soln
+- Had no idea of monotonic decreasing deque concept
+- My old soln:
+
+# This will give TLE ofc becs TC: O((n-k) * k)
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+
+        l = 0
+        r = l+k-1
+        ans = []
+
+        for r in range(k-1, len(nums)):
+            if(nums[r])
+            x = max(nums[l:r+1])
+            ans.append(x)
+            l += 1
+            r += 1
+
+        return ans
+"""
