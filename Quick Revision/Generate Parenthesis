@@ -1,0 +1,27 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+
+        res = []
+
+        def backtrack(open_cnt: int, close_cnt: int, path: str):
+            if(open_cnt == close_cnt == n):
+                res.append(path)
+                return
+
+            if(open_cnt < n):
+                backtrack(open_cnt+1, close_cnt, path+'(')
+
+            if(close_cnt < open_cnt):
+                backtrack(open_cnt, close_cnt+1, path+')')
+            
+        
+        backtrack(0,0,"")
+        return res
+
+"""
+Date: 25th Jan 2026
+- Couldn't do myself cuz haven't learnt backtracking yet
+- Do more research on its TC
+- https://chatgpt.com/s/t_69761d24a9788191997ef45718c98b9d 
+- https://chatgpt.com/s/t_69761d37df208191a5824713ac1886c4
+"""
