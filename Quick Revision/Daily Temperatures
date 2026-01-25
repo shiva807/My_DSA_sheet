@@ -1,0 +1,26 @@
+# https://leetcode.com/problems/daily-temperatures/description/
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+
+        res = [0] * len(temperatures)
+        stack = []
+
+        for i in range(len(temperatures)):
+            if(not stack or temperatures[i] < stack[-1][0]):
+                stack.append((temperatures[i], i))
+            else:
+                while(stack and temperatures[i] > stack[-1][0]):
+                    indx = stack[-1][1]
+                    res[indx] = i - indx
+                    stack.pop()
+                stack.append((temperatures[i], i))
+
+        return res
+
+"""
+Date: 25th Jan 2026
+- Could not think of stack usage here
+- could code it after understanding the logic
+- https://www.youtube.com/watch?v=cTBiBSnjO3c
+"""
