@@ -1,0 +1,58 @@
+# https://leetcode.com/problems/kth-smallest-element-in-a-bst/?envType=study-plan-v2&envId=top-interview-150
+
+# Recursive
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        self.cnt = 0
+        self.ans = -1
+
+        def inorder(node):
+            if not node:
+                return False
+
+            if inorder(node.left):
+                return True
+
+            self.cnt += 1
+            if self.cnt == k:
+                self.ans = node.val
+                return True
+
+            return inorder(node.right)
+
+        inorder(root)
+        return self.ans
+
+
+# Iterative
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        stack = []
+        curr = root
+
+        while True:
+            while curr:
+                stack.append(curr)
+                curr = curr.left
+
+            curr = stack.pop()
+            k -= 1
+            if k == 0:
+                return curr.val
+
+            curr = curr.right
+
+"""
+Date: 28th Jan 2026
+- Got the logic almost, didn't know about inorder part
+- Iterative soln explanation: https://chatgpt.com/s/t_697a453a5104819199c1ab8d37ecc8d5 
+"""
+
