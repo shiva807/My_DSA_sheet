@@ -1,0 +1,32 @@
+# https://www.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1
+
+class Solution:
+    
+    def dfs(self, adj):
+        n = len(adj)
+        visited = [False] * n
+        ans = []
+        
+        def helper(node):
+            
+            visited[node] = True
+            ans.append(node)
+            
+            for x in adj[node]:
+                if not visited[x]:
+                    helper(x)
+            
+
+        
+        for i in range(n):
+            if not visited[i]:
+                helper(i)
+            
+        return ans
+
+"""
+Date: 30th Jan 2026
+- Coded myself, made minor mistakes, chatgpt corrected
+- GFG testcases are gone case xP they pass even if your code is not not exactly accurate
+- https://chatgpt.com/s/t_697cd75c35ec8191bdd4c206b32f37b7 
+"""
