@@ -1,0 +1,31 @@
+# https://www.geeksforgeeks.org/problems/bfs-traversal-of-graph/1
+
+from collections import deque
+from typing import List
+
+class Solution:
+    def bfs(self, adj: List[List[int]]):
+        n = len(adj)
+        
+        q = deque()
+        visited = [False] * n
+        bfs = []
+        
+        q.append(0)
+        visited[0] = True
+        
+        
+        while q:
+            node = q.popleft()
+            bfs.append(node)
+                
+            for neigh in adj[node]:
+                if not visited[neigh]:
+                    visited[neigh] = True
+                    q.append(neigh)
+        
+        return bfs
+
+"""
+More details on why deque is used, whats TC etc: https://chatgpt.com/s/t_697c7f0ba83481919d0422151e511d7d
+"""
