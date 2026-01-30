@@ -1,0 +1,41 @@
+# https://leetcode.com/problems/number-of-islands/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        visited = [[False for _ in range(n)] for _ in range(m)]
+        q = deque()
+        count = 0
+
+        def bfs(i, j):
+            visited[i][j] = True
+            q.append((i, j))
+            while q:
+                r, c = q.popleft()
+
+                # traverse the neighbours and mark visited
+                for dr, dc in [(-1,0), (1,0), (0,-1), (0,1)]:
+                    nr = r + dr
+                    nc = c + dc
+                    if(nr >= 0 and nr < m and nc >= 0 and nc < n and 
+                        not visited[nr][nc] and grid[nr][nc]=='1'):
+                        visited[nr][nc] = True
+                        q.append((nr, nc))
+
+        for i in range(m):
+            for j in range(n):
+                if(grid[i][j]=='1' and not visited[i][j]):
+                    count += 1
+                    bfs(i, j)
+
+        return count
+
+"""
+Date: 30th Jan 2026
+- This soln considers only 4 directions, horizontally and vertically
+- Almost coded myself with few hiccups
+- SC: visited grid and queue = O(N^2)
+- TC: O(N^2)
+- One optimisation that can be done is use grid itself instead of visited grid. See soln here: https://chatgpt.com/s/t_697ce91fa2988191a6015faf24aea694 
+"""
