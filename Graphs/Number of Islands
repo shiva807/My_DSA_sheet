@@ -1,0 +1,41 @@
+# https://www.geeksforgeeks.org/problems/find-the-number-of-islands/1
+
+from typing import List
+from collections import deque
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        visited = [[False for _ in range(n)] for _ in range(m)]
+        q = deque()
+        count = 0
+
+        def bfs(i, j):
+            visited[i][j] = True
+            q.append((i, j))
+            while q:
+                r, c = q.popleft()
+
+                # traverse the neighbors and mark visited
+                for dx in [-1, 0, 1]:
+                    for dy in [-1, 0, 1]:
+                        nr = r + dx
+                        nc = c + dy
+                        if(nr >= 0 and nr < m and nc >= 0 and nc < n and 
+                            not visited[nr][nc] and grid[nr][nc] == 'L'):
+                            visited[nr][nc] = True
+                            q.append((nr, nc))
+
+        for i in range(m):
+            for j in range(n):
+                if(grid[i][j] == 'L' and not visited[i][j]):
+                    count += 1
+                    bfs(i, j)
+
+        return count
+
+"""
+Date: 30th Jan 2026
+- Above considers horizontally, vertically as well as diagonally
+"""
