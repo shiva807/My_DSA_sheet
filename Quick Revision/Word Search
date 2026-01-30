@@ -1,0 +1,60 @@
+class Solution:
+    def dfs(i, j, board, word):
+        if(i >= m or i < 0 or j>=n or j < 0 or visited[i][j]):
+            return False
+
+        if(board[i][j] != letter):
+            return False
+
+        if(board[i][j] == word[k]):
+            k += 1
+            return True
+
+        visited[i][j] = True
+        dfs(i-1, j, board, word)
+        dfs(i+1, j, board, word)
+        dfs(i, j-1, board, word)
+        dfs(i, j+1, board, word)
+
+        
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        m = len(board)
+        n = len(board[0])
+        visited = [[False for _ in range(n)] for _ in range(m)]
+
+        k = 0
+        def dfs(i, j, k):
+            if(k == len(word)):
+                return True
+
+            if(i < 0 or i >=m or j < 0 or j >=n or 
+            visited[i][j] or board[i][j] != word[k]):
+                return False
+
+            visited[i][j] = True
+            
+            found = (
+                dfs(i-1, j, k+1) or
+                dfs(i+1, j, k+1) or
+                dfs(i, j-1, k+1) or
+                dfs(i, j+1, k+1)
+            )
+
+            visited[i][j] = False
+
+            return found
+
+        for i in range(0, m):
+            for j in range(0, n):
+                if dfs(i, j, k):
+                    return True
+        return False
+
+"""
+Date: 29th Jan 2026
+- Came up with logic myself
+- But couldn't write code properly
+- Took chatgpt help:
+https://chatgpt.com/s/t_697c5b43fe788191b11968d72d102ec2
+https://chatgpt.com/s/t_697c5b65b0ac8191bc7394a0590a55c3
+"""
