@@ -1,0 +1,35 @@
+# https://leetcode.com/problems/clone-graph/description/?envType=study-plan-v2&envId=top-interview-150
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        old_to_new_map = {}
+
+        def dfs(node):
+            if node in old_to_new_map:
+                return old_to_new_map[node]
+
+            copy = Node(node.val)
+            old_to_new_map[node] = copy
+            for neigh in node.neighbors:
+                copy.neighbors.append(dfs(neigh))
+
+            return copy
+
+        return dfs(node) if node else None
+
+"""
+Date: 31st Jan 2026
+- Solved entirely using video
+- https://www.youtube.com/watch?v=mQeF6bN8hMk
+- TC: O(V + E), SC: O(V)
+- Complexity deets: https://chatgpt.com/s/t_697dc60113988191b2b4dd6cb971e31b 
+"""
