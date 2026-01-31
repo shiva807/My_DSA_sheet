@@ -1,0 +1,72 @@
+# https://leetcode.com/problems/max-area-of-island/
+
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        area = 0
+        max_area = 0
+
+        def bfs(i, j):
+            q = deque()
+            q.append((i,j))
+            grid[i][j] = 0
+            area = 1
+
+            while q:
+                r,c = q.popleft()
+
+                for dr, dc in [(-1,0), (1, 0), (0, -1), (0, 1)]:
+                    nr = r + dr
+                    nc = c + dc
+                    if(nr >=0 and nr < m and nc >= 0 and nc < n and grid[nr][nc]):
+                        area += 1
+                        grid[nr][nc] = 0
+                        q.append((nr, nc))
+
+            return area
+
+        for i in range(m):
+            for j in range(n):
+                if(grid[i][j]):
+                    res = bfs(i, j)
+                    max_area = max(max_area, res)
+
+        return max_area
+
+"""
+Date: 31st Jan 2026
+My mistake:
+- I started solving using dfs, instead of bfs when i had solved number of islands using bfs, shows i am still not having a proper hang of things
+- DFS soln for it below, was almost right, only was returning from inside loop which was not exploring all islands, corrected using chatgpt
+
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        area = 0
+        max_area = 0
+
+        def dfs(i, j):
+            grid[i][j] = 0
+            area = 1
+
+            for dr, dc in [(-1,0), (1, 0), (0, -1), (0, 1)]:
+                nr = i + dr
+                nc = j + dc
+                if(nr >=0 and nr < m and nc >= 0 and nc < n and grid[nr][nc]):
+                    area += dfs(nr, nc)
+
+            return area
+
+        for i in range(m):
+            for j in range(n):
+                if(grid[i][j]):
+                    res = dfs(i, j)
+                    print(res)
+                    max_area = max(max_area, res)
+
+
+        return max_area
+
+"""
