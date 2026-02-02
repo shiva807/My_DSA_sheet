@@ -1,0 +1,41 @@
+# https://leetcode.com/problems/pacific-atlantic-water-flow/
+
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        m = len(heights)
+        n = len(heights[0])
+        pac, atl = set(), set()
+
+        def dfs(i, j, visit, prev_height):
+            if(i<0 or i>=m or j<0 or j>=n or (i,j) in visit or heights[i][j] < prev_height):
+                return
+
+            visit.add((i, j))
+            prev_height = heights[i][j]
+            dfs(i+1, j, visit, prev_height)
+            dfs(i-1, j, visit, prev_height)
+            dfs(i, j+1, visit, prev_height)
+            dfs(i, j-1, visit, prev_height)
+
+
+        for c in range(n):
+            dfs(0, c, pac, heights[0][c])
+            dfs(m-1, c, atl, heights[m-1][c])
+
+        for r in range(m):
+            dfs(r, 0, pac, heights[r][0])
+            dfs(r, n-1, atl, heights[r][n-1])
+
+        ans = []
+        for r in range(m):
+            for c in range(n):
+                if((r,c) in pac and (r,c) in atl):
+                    ans.append(list((r, c)))
+
+        return ans
+
+"""
+Date: 2nd Feb 2026
+- Couldn't solve myself ofc, logic of Neetcode guy is good.
+- Video: https://www.youtube.com/watch?v=s-VkcjHqkGI
+"""
