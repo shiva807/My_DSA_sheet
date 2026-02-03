@@ -1,0 +1,35 @@
+from collections import deque
+class Solution:
+    def topoSort(self, V, edges):
+        q = deque()
+        indegree = [0] * V
+        adj = [[] for _ in range(V)]
+        
+        for u, v in edges:
+            adj[u].append(v)
+            indegree[v] += 1
+        
+        for i in range(V):
+            if(indegree[i] == 0):
+                q.append(i)
+                
+        topo = []
+                
+        while q:
+            node = q.popleft()
+            topo.append(node)
+            
+            for neigh in adj[node]:
+                indegree[neigh] -= 1
+                if(indegree[neigh] == 0):
+                    q.append(neigh)
+                    
+        # cycle check
+        if len(topo) != V:
+            return []   # cycle exists, topo not possible
+                    
+        return topo
+
+"""
+Date: 3rd Feb 2026
+"""
