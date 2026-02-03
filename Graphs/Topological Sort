@@ -1,0 +1,35 @@
+# https://www.geeksforgeeks.org/problems/topological-sort/1
+
+class Solution:
+    def topoSort(self, V, edges):
+        visited = [0] * V
+        stack = []
+        adj = [[] for _ in range(V)]
+        for u, v in edges:
+            adj[u].append(v)
+        
+        def dfs(i):
+            visited[i] = 1
+            
+            for neigh in adj[i]:
+                if(not visited[neigh]):
+                    dfs(neigh)
+                    
+            stack.append(i)
+
+        for i in range(V):
+            if(not visited[i]):
+                dfs(i)
+        
+        ans = []       
+        while stack:
+            ans.append(stack.pop())
+                
+        return ans
+
+"""
+Date: 3rd Feb 2026
+- Watched Striver's video
+- Need to convert edges list into adj list for easy understanding of soln
+- Topological sort using DFS runs in O(V + E) time and O(V + E) space due to the adjacency list, visited array, stack, and recursion depth.
+"""
