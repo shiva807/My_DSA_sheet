@@ -32,5 +32,6 @@ class Solution:
 """
 Date: 3rd Feb 2026
 - this is straightfwd Kahn's Algo (BFS topo sort)
-- Just ensure if the ques says u->v or v->u, gfg tells u->v while LC tells v->u, create adj list and indegree list according;u
+- Just ensure if the ques says u->v or v->u, gfg tells u->v while LC tells v->u, create adj list and indegree list accordingly
+- To take course 0 u have to take course 1, means 1 comes before 0 means 1->0
 """
