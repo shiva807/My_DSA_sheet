@@ -1,0 +1,36 @@
+# https://leetcode.com/problems/course-schedule/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        adj = [[] for _ in range(numCourses)]
+        q = deque()
+        topo = []
+        indegree = [0] * numCourses
+
+        for u, v in prerequisites:
+            adj[v].append(u)
+            indegree[u] += 1
+
+        for i in range(numCourses):
+            if(indegree[i] == 0):
+                q.append(i)
+
+        while q:
+            node = q.popleft()
+            topo.append(node)
+
+            for neigh in adj[node]:
+                indegree[neigh] -= 1
+                if(indegree[neigh] == 0):
+                    q.append(neigh)
+
+        if len(topo) != numCourses:    # detects cycle
+            return False
+
+        return True
+
+"""
+Date: 3rd Feb 2026
+- this is straightfwd Kahn's Algo (BFS topo sort)
+- Just ensure if the ques says u->v or v->u, gfg tells u->v while LC tells v->u, create adj list and indegree list according;u
+"""
