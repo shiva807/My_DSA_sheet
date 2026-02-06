@@ -1,0 +1,31 @@
+# https://leetcode.com/problems/combination-sum/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        n = len(candidates)
+        ans = []
+
+        def recur(indx, target, tmp):
+            if(target == 0):
+                ans.append(tmp.copy())
+                return
+            if(indx >= n):
+                return
+            
+            if(candidates[indx] <= target):
+                tmp.append(candidates[indx])
+                recur(indx, target - candidates[indx], tmp)
+                if(tmp):
+                    tmp.pop()
+                
+            recur(indx+1, target, tmp)
+
+        recur(0, target, [])
+        return ans
+
+"""
+Date: 6th Feb 2026
+- Solved it by myself :) 
+- Made few Pythonic mistakes like not using tmp.copy()
+- Mistakes detailed here: https://chatgpt.com/s/t_6985abcf525481918fda140d81337d2a 
+"""
