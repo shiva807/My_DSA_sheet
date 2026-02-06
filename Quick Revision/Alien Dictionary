@@ -1,0 +1,59 @@
+# https://www.geeksforgeeks.org/problems/alien-dictionary/1
+
+from collections import deque
+
+class Solution:
+    def findOrder(self, words):
+        n = len(words)
+        adj = [[] for _ in range(26)]
+        indegree = [0] * 26
+        present = set()
+        
+        for w in words:
+            for c in w:
+                present.add(ord(c)-ord('a'))
+        
+        for i in range(n-1):
+            s1 = words[i]
+            s2 = words[i+1]
+            l = min(len(s1), len(s2))
+            
+            if(len(s1) > len(s2) and s1[:l] == s2[:l]):
+                return ""
+            
+            for j in range(l):
+                if(s1[j] != s2[j]):
+                    u = ord(s1[j])-ord('a')
+                    v = ord(s2[j])-ord('a')
+                    adj[u].append(v)
+                    indegree[v] += 1
+                    break
+        
+        q = deque()           
+        for x in present:
+            if(indegree[x] == 0):
+                q.append(x)
+                
+                
+        topo = []
+                
+        while q:
+            node = q.popleft()
+            topo.append(chr(ord('a')+node))
+            
+            for neigh in adj[node]:
+                indegree[neigh] -= 1
+                if(indegree[neigh] == 0):
+                    q.append(neigh)
+                    
+        if(len(topo) != len(present)):
+            return ""
+        
+        return ''.join(topo)
+
+"""
+Date: 5th Feb 2026
+- HARD problem, could not solve myself
+- Repeating again, if x comes before y means x -> y, adj[x].append[y] and indegree[y]+=1
+- Watch Striver video, its good
+"""
