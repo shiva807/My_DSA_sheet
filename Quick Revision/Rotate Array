@@ -1,0 +1,27 @@
+# https://leetcode.com/problems/rotate-array/submissions/1920122843/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        k = k % n
+
+        def reverse(start, end):
+            while(start < end):
+                temp = nums[start]
+                nums[start] = nums[end]
+                nums[end] = temp
+                start += 1
+                end -= 1
+
+        reverse(0, n-1)
+        reverse(0, k-1)
+        reverse(k, n-1)
+
+"""
+Date: 15th Feb 2026
+- Brute force o(n*k), I could come up with, then I did think of using swapping logic, but couldn't entirely come up with the reverse intuition
+- Check this for more info on why we use reverse approach: https://chatgpt.com/s/t_6991d4b7aaa481919fcad955a9f88934
+"""
